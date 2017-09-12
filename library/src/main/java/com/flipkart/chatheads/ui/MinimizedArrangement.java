@@ -334,7 +334,7 @@ public class MinimizedArrangement<T extends Serializable> extends ChatHeadArrang
     }
 
     private Bundle getBundle(int heroIndex) {
-        if(hero!=null) {
+        if(hero!=null && hero.getHorizontalSpring() != null) {
             relativeXPosition = hero.getHorizontalSpring().getCurrentValue() * 1.0 / maxWidth;
             relativeYPosition = hero.getVerticalSpring().getCurrentValue() * 1.0 / maxHeight;
         }
