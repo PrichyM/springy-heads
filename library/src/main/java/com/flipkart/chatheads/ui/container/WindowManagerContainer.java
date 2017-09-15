@@ -186,7 +186,8 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
             // about to be maximized
             WindowManager.LayoutParams layoutParams = getOrCreateLayoutParamsForContainer(motionCaptureView);
             layoutParams.flags |= FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCHABLE;
-            windowManager.updateViewLayout(motionCaptureView, layoutParams);
+            if (motionCaptureView != null && motionCaptureView.getWindowToken() != null)
+                windowManager.updateViewLayout(motionCaptureView, layoutParams);
 
             layoutParams = getOrCreateLayoutParamsForContainer(getFrameLayout());
             layoutParams.flags &= ~FLAG_NOT_FOCUSABLE; //add focusability
@@ -242,7 +243,9 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
     }
 
     public void destroy() {
-        windowManager.removeViewImmediate(motionCaptureView);
+        if (motionCaptureView != null && motionCaptureView.getWindowToken() != null) {
+            windowManager.removeViewImmediate(motionCaptureView);
+        }
         windowManager.removeViewImmediate(getFrameLayout());
     }
 
