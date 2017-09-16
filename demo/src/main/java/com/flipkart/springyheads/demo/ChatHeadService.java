@@ -1,6 +1,8 @@
 package com.flipkart.springyheads.demo;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -113,7 +115,17 @@ public class ChatHeadService extends Service {
     }
 
     private void moveToForeground() {
-        Notification notification = new NotificationCompat.Builder(this, "Channel ID")
+      final String channelId = "Notification Channel ID";
+      final String channelName = "Notification Channel Name";
+      if (Build.VERSION.SDK_INT >= 26) {
+        final NotificationChannel defaultChannel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_MIN);
+        final NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.createNotificationChannel(defaultChannel);
+        }
+      }
+
+        Notification notification = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.notification_template_icon_bg)
                 .setContentTitle("Springy heads")
                 .setContentText("Click to configure.")
