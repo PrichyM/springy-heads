@@ -29,8 +29,6 @@ import static android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-import static android.view.WindowManager.LayoutParams.TYPE_PHONE;
-import static android.view.WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
 
 /**
  * Created by kiran.kumar on 08/11/16.
@@ -49,6 +47,13 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
     private WindowManager windowManager;
     private ChatHeadArrangement currentArrangement;
     private boolean motionCaptureViewAdded;
+
+    private static final int OVERLAY_TYPE;
+    static { if (Build.VERSION.SDK_INT >= 26) {
+      OVERLAY_TYPE = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+    } else {
+      OVERLAY_TYPE = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
+    }}
 
     public WindowManagerContainer(Context context) {
         super(context);
@@ -135,7 +140,7 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
             focusableFlag = FLAG_NOT_TOUCHABLE | FLAG_NOT_FOCUSABLE;
         }
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(MATCH_PARENT, MATCH_PARENT,
-                TYPE_PHONE,
+                OVERLAY_TYPE,
                 focusableFlag,
                 PixelFormat.TRANSLUCENT);
         layoutParams.x = 0;

@@ -113,10 +113,14 @@ public class ChatHeadService extends Service {
     }
 
     private void moveToForeground() {
-        Notification notification = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, "Channel ID")
                 .setSmallIcon(R.drawable.notification_template_icon_bg)
                 .setContentTitle("Springy heads")
                 .setContentText("Click to configure.")
+                .setOngoing(true)
+                .setWhen(System.currentTimeMillis())
+                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, FloatingActivity.class), 0))
                 .build();
 

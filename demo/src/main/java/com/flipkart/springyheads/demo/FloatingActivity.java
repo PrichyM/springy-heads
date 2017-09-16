@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.support.v4.content.ContextCompat;
 
 /**
  * Created by kiran.kumar on 06/02/16.
@@ -49,7 +50,7 @@ public class FloatingActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = new Intent(this, ChatHeadService.class);
-        startService(intent);
+        ContextCompat.startForegroundService(this, intent);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         setupButtons();
     }
